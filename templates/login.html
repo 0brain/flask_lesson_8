@@ -1,0 +1,13 @@
+{% extends "base.html" %} <!-- Означає, що наблон login.html наслідується від батьківського base.html-->
+
+{% block content %}
+{{ super() }} <!-- Звертається до атрибутів класів над ним в порядку успадкування -->
+
+<form action="/login" method="post" class="form-contact">
+    <!-- Буде 2 поля вводу  "username" і "psw" -->
+    <p><label>Ім’я: </label> <input type="text" name="username" value="" required />
+    <p><label>Пароль: </label> <input type="password" name="psw" value="" required />
+    <p><input type="submit" value="Увійти" />
+</form>
+
+{% endblock %}
