@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, g
 
 # конфигурация
 DATABASE = '/tmp/flsite.db'  # шлях до бази даних
@@ -24,3 +24,15 @@ def create_db():  # Функція яка буде створювати базу
         db.cursor().executescript(f.read())
     db.commit()
     db.close()
+
+
+def get_db():  # функція буде встановлювати зєднання з бд, якщо воно не встановлено
+    if not hasattr(g, 'link_db'):  # в змінну g буде записуватися будь-яка інформація про користувача. В даному випадку запишемо інформацію про встановлення з’єднання з базою даних.
+        g.link_db = connect_db()  # перевіряємо чи існує в даного об’єкта g властивість link_db. Якщо існує, то зв’язок з БД вже було встановлено. І його просто треба повернути функції через ретурн.
+    return g.link_db  # а якщо зв’язок не був встановлений, то викликаємо функцію connect_db(), яка встановить звя’зок з БД.
+
+
+@app.route("/")
+def index():
+    db = get_db()  # викликаємо функцію, щоб встановити зєднання з базою даних
+    return render_template('index.html', menu=[])
