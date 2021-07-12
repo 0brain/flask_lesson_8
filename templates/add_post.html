@@ -1,0 +1,16 @@
+{% extends 'base.html' %}  <!-- Означає, що наблон add_post.html наслідується від батьківського base.html-->
+
+{% block content %}
+{{ super() }}  <!-- Звертається до атрибутів класів над ним в порядку успадкування -->
+{% for cat, msg in get_flashed_messages(True) %}  <!-- get_flashed_messages() - повертає назву категорії та повідомлення про відправлення чи помилку відправлення, якщо воно там є. Кожне повідомлення поміщається в змінну msg, а назва категорії в змінну cat. True - щоб дані поверталися саме в такому порядку: категорія, повідомлення.-->
+<div class="flash {{cat}}">{{msg}}</div>  <!-- Повідомлення буде відображене за допомогою блоку дів -->
+{% endfor %}
+
+<form action="{{url_for('addPost')}}" method="post" class="form-contact">
+<p><label>Назва статті: </label> <input type="text" name="name" value="" requied />
+<p><label>URL статті: </label> <input type="text" name="url" value="" requied />
+<p><label>Текст статті:</label>
+<p><textarea name="post" rows=7 cols=40></textarea>
+<p><input type="submit" value="Добавити" />
+</form>
+{% endblock %}
