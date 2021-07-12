@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from flask import Flask, render_template, request, g
+from flask import Flask, render_template, request, g, flash
 from FDataBase import FDataBase
 
 # конфигурация
@@ -62,7 +62,7 @@ def addPost():
         else:
             flash('Помилка додавання статті', category='error')  # якщо заголовок статті менше 4 символів або/і вміст статті менше 10 символів, то буде сформовано флеш повідомлення про невдале додавання і категорія в нього буде error
 
-    return render_template('add_post.html', menu = dbase.getMenu(), title="Добавление статьи")  # після всіх перевірок буде сформовано шаблон add_post.html
+    return render_template('add_post.html', menu=dbase.getMenu(), title="Добавление статьи")  # після всіх перевірок буде сформовано шаблон add_post.html
 
 if __name__ == "__main__":
     app.run(debug=True)
