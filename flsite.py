@@ -1,6 +1,7 @@
 import sqlite3
 import os
 from flask import Flask, render_template, request, g
+from FDataBase import FDataBase
 
 # конфигурация
 DATABASE = '/tmp/flsite.db'  # шлях до бази даних
@@ -41,7 +42,9 @@ def close_db(error):  # функція буде закривати зєднан�
 @app.route("/")
 def index():
     db = get_db()  # викликаємо функцію, щоб встановити зєднання з базою даних
-    return render_template('index.html', menu=[])
+    dbase = FDataBase(db)  # вводимо екземпляр dbase класу FDataBase
+    return render_template('index.html', menu = dbase.getMenu())  # через екземпляр dbase викликаємо метод getMenu
+    #  getMenu повертає колекцію із словників, і використовуючи посилання (menu=dbase.getMenu()) на цю колекцію, в шаблоні 'index.html' формується меню нашої сторінки
 
 
 if __name__ == "__main__":
