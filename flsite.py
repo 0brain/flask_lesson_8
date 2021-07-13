@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from flask import Flask, render_template, request, g, flash
+from flask import Flask, render_template, request, g, flash, abort
 from FDataBase import FDataBase
 
 # конфигурация
