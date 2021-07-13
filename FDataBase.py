@@ -29,3 +29,15 @@ class FDataBase:
             return False
 
         return True  # якщо стаття додана успішно, то повертаємо True
+
+
+    def getPost(self, postId):  # метод getPost буде приймати параметр postId
+        try:
+            self.__cur.execute(f"SELECT title, text FROM posts WHERE url LIKE id={postId} LIMIT 1")  # і якраз по параметру postId ми будем вибирати статтю з нашої бази даних з таблиці posts. Вибираємо титул, текст з таблиці posts, id статі має співпадати з postId, який ми передаємо в метод getPost
+            res = self.__cur.fetchone()  # метод fetchone - беремо лише 1 запис, він там і є один
+            if res:  # якщо запис був прочитаний успішно, то
+                return res  # повертаємо запис в вигляді кортежа
+        except sqlite3.Error as e:
+            print("Ошибка получения статьи из БД "+str(e))  # а інакше формуємо помилку і повертаємо фолс
+
+        return (False, False)
