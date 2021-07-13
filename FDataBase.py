@@ -41,3 +41,14 @@ class FDataBase:
             print("Ошибка получения статьи из БД "+str(e))  # а інакше формуємо помилку і повертаємо фолс
 
         return (False, False)
+
+
+    def getPostsAnonce(self):
+        try:
+            self.__cur.execute(f"SELECT id, title, text, url FROM posts ORDER BY time DESC")  # вибирає всі записи з таблиці posts, відсортовані від найсвіжішої і вниз
+            res = self.__cur.fetchall()  # за допомогою методу fetchall() отримуємо всі записи з таблиці posts у вигляді словника
+            if res: return res  # якщо записи були отримані успішно, то ми їх повертаємо
+        except sqlite3.Error as e:   # якщо ні, то ми формуємо помилку і повертаємо пустий список
+            print("Ошибка получения статьи из БД "+str(e))
+
+        return []
