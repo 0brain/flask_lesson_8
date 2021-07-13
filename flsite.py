@@ -64,5 +64,17 @@ def addPost():
 
     return render_template('add_post.html', menu=dbase.getMenu(), title="Добавление статьи")  # після всіх перевірок буде сформовано шаблон add_post.html
 
+
+@app.route("/post/<int:id_post>")  # вводимо декоратор для /post/<int:id_post> адреси, по якій буде відображатися стаття.
+def showPost(id_post):   # функція showPost буде приймати параметр id_post, який якраз відображається в URL /post/<int:id_post>.
+    db = get_db()  # викликаємо функцію, щоб встановити зєднання з базою даних
+    dbase = FDataBase(db)   # вводимо екземпляр dbase класу FDataBase
+    title, post = dbase.getPost(id_post)  # за допомогою методу getPost з бази даних ми будемо брати статтю по цьому id: id_post
+    if not title:   # якщо з якоїсь причини стаття не була отримана з бази даних, то
+        abort(404)  # буде виведена помилка 404
+
+    return render_template('post.html', menu=dbase.getMenu(), title=title, post=post)  # а якщо все пройде добре, то буде відображено шаблон post.html, тобто стаття з заголовком title=title і вмістом post=post
+
+
 if __name__ == "__main__":
     app.run(debug=True)
