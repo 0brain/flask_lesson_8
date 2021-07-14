@@ -62,7 +62,7 @@ def addPost():
         else:
             flash('Помилка додавання статті', category='error')  # якщо заголовок статті менше 4 символів або/і вміст статті менше 10 символів, то буде сформовано флеш повідомлення про невдале додавання і категорія в нього буде error
 
-    return render_template('add_post.html', menu=dbase.getMenu(), title="Добавление статьи")  # після всіх перевірок буде сформовано шаблон add_post.html
+    return render_template('add_post.html', menu=dbase.getMenu(), title="Додавання статті")  # після всіх перевірок буде сформовано шаблон add_post.html
 
 
 @app.route("/post/<alias>")  # вводимо декоратор для /post/<int:id_post> адреси, по якій буде відображатися стаття. # Змінюємо <int:id_post> на псевдонім alias, тобіто на унікальний url статті
