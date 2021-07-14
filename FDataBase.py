@@ -21,6 +21,12 @@ class FDataBase:
 
     def addPost(self, title, text, url):  # метод додавання статті приймає 2 параметри: title, text
         try:  # в блоці try намагаємося додати запис в базу даних
+            self.__cur.execute(f"SELECT COUNT() as `count` FROM posts WHERE url LIKE '{url}'")  # при додаванні статті ми повинні перевірити чи існує в таблиці стаття з таким url який ми передали в функцію addPost, тому ми перевіряємо кількість рядків в таблиці, url яких є ідентична з url, яку ми передали в функцію.
+            res = self.__cur.fetchone()
+            if res['count'] > 0:  # якщо count>0, тобто стаття з таким url вже існує в таблиці, то виводимо відповідний текст
+                print("Стаття з таким url вже існує")
+                return False
+
             tm = math.floor(time.time())  # отримуємо поточний час додавання статті, округлений до секунд
             self.__cur.execute("INSERT INTO posts VALUES(NULL, ?, ?, ?, ?)", (title, text, url, tm))  # добавляємо записи в таблицю posts і беремо дані з кортежу (title, text, url, tm)
             self.__db.commit()  # зберігає в базу даних цей запис "INSERT INTO posts VALUES(NULL, ?, ?, ?, ?)"
