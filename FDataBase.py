@@ -37,9 +37,9 @@ class FDataBase:
         return True  # якщо стаття додана успішно, то повертаємо True
 
 
-    def getPost(self, postId):  # метод getPost буде приймати параметр postId
+    def getPost(self, alias):  # метод getPost буде приймати параметр alias
         try:
-            self.__cur.execute(f"SELECT title, text FROM posts WHERE id={postId} LIMIT 1")  # і якраз по параметру postId ми будем вибирати статтю з нашої бази даних з таблиці posts. Вибираємо титул, текст з таблиці posts, id статі має співпадати з postId, який ми передаємо в метод getPost
+            self.__cur.execute(f"SELECT title, text FROM posts WHERE url LIKE '{alias}' LIMIT 1")  # і якраз по параметру alias ми будем вибирати статтю з нашої бази даних з таблиці posts. Вибираємо титул, текст з таблиці posts, url статі має співпадати з alias, який ми передаємо в метод getPost
             res = self.__cur.fetchone()  # метод fetchone - беремо лише 1 запис, він там і є один
             if res:  # якщо запис був прочитаний успішно, то
                 return res  # повертаємо запис в вигляді кортежа

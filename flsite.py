@@ -65,11 +65,11 @@ def addPost():
     return render_template('add_post.html', menu=dbase.getMenu(), title="Добавление статьи")  # після всіх перевірок буде сформовано шаблон add_post.html
 
 
-@app.route("/post/<int:id_post>")  # вводимо декоратор для /post/<int:id_post> адреси, по якій буде відображатися стаття.
-def showPost(id_post):   # функція showPost буде приймати параметр id_post, який якраз відображається в URL /post/<int:id_post>.
+@app.route("/post/<alias>")  # вводимо декоратор для /post/<int:id_post> адреси, по якій буде відображатися стаття. # Змінюємо <int:id_post> на псевдонім alias, тобіто на унікальний url статті
+def showPost(alias):   # функція showPost буде приймати параметр alias, який якраз відображається в URL /post/alias - унікальна адреса статті на сайті.
     db = get_db()  # викликаємо функцію, щоб встановити зєднання з базою даних
     dbase = FDataBase(db)   # вводимо екземпляр dbase класу FDataBase
-    title, post = dbase.getPost(id_post)  # за допомогою методу getPost з бази даних ми будемо брати статтю по цьому id: id_post
+    title, post = dbase.getPost(alias)  # за допомогою методу getPost з бази даних ми будемо брати статтю по унікальному url - alias.
     if not title:   # якщо з якоїсь причини стаття не була отримана з бази даних, то
         abort(404)  # буде виведена помилка 404
 
