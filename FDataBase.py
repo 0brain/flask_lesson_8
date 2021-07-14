@@ -1,6 +1,8 @@
 import sqlite3
 import time
 import math
+import re  #Імпортуємо модуль регулярного виразу
+from flask import url_for
 
 
 class FDataBase:
@@ -26,6 +28,14 @@ class FDataBase:
             if res['count'] > 0:  # якщо count>0, тобто стаття з таким url вже існує в таблиці, то виводимо відповідний текст
                 print("Стаття з таким url вже існує")
                 return False
+
+            # За допомогою регулярних виразів робимо так, щоб картинки відображалися в статтях
+            base = url_for('static', filename='images_html')  # вводимо змінну base, яка буде посилатися на каталог static і підкаталог images_html. Тобто перед кожною назвою картинки ми повинні додати адресу каталога static відносно папки проекту.
+            # Вводимо регулярний вираз. Він звертається до тексту нашого html документа text, знаходимо теги img - img\s+[^>]*src= і модифікуємо шляхи до зображення (?P<url>.+?) так, що вони бралися саме з каталога static і підкаталога images_html, тобто прописуємо  + base +.
+            text = re.sub(r"(?P<tag><img\s+[^>]*src=)(?P<quote>[\"'])(?P<url>.+?)(?P=quote)>",  # Таким чином на модифікований текст буде посилатися змінна text
+                          "\\g<tag>" + base + "/\\g<url>>",
+                          text)
+
 
             tm = math.floor(time.time())  # отримуємо поточний час додавання статті, округлений до секунд
             self.__cur.execute("INSERT INTO posts VALUES(NULL, ?, ?, ?, ?)", (title, text, url, tm))  # добавляємо записи в таблицю posts і беремо дані з кортежу (title, text, url, tm)
