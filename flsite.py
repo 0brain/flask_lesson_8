@@ -78,5 +78,9 @@ def showPost(alias):   # функція showPost буде приймати па�
     return render_template('post.html', menu=dbase.getMenu(), title=title, post=post)  # а якщо все пройде добре, то буде відображено шаблон post.html, тобто стаття з заголовком title=title і вмістом post=post
 
 
+@app.route("/login")
+def login():
+    return render_template("login.html", menu=dbase.getMenu(), title="Авторизация")
+
 if __name__ == "__main__":
     app.run(debug=True)
