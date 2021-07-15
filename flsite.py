@@ -80,7 +80,13 @@ def showPost(alias):   # функція showPost буде приймати па�
 
 @app.route("/login")
 def login():
-    return render_template("login.html", menu=dbase.getMenu(), title="Авторизация")
+    return render_template("login.html", menu=dbase.getMenu(), title="Авторизація")
+
+
+@app.route("/register")
+def register():
+    return render_template("register.html", menu=dbase.getMenu(), title="Реєстрація")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
