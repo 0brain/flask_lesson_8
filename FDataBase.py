@@ -72,14 +72,14 @@ class FDataBase:
 
     def addUser(self, name, email, hpsw): # передаємо всі необхідні параметри name, email, hpsw
         try:
-            self.__cur.execute(f"SELECT COUNT() as `count` FROM users WHERE email LIKE '{email}'") # якщо користувач з таким email вже існує в таблиці users, то
+            self.__cur.execute(f"SELECT COUNT() as `count` FROM users WHERE email LIKE '{email}'")  # якщо користувач з таким email вже існує в таблиці users, то
             res = self.__cur.fetchone()
             if res['count'] > 0:
                 print("Користувач з таким email вже існує")
                 return False  # то ми повертаємо False і кажемо, що Користувач з таким email вже існує
 
             tm = math.floor(time.time())  # формуємо час коли відбувається реєстрація користувача
-            self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, NULL, ?)", (name, email, hpsw, tm))  # і додаємо користувача в базу даних, додаємо всі поля name, email, hpsw, tm
+            self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, ?)", (name, email, hpsw, tm))
             self.__db.commit()  # викликаємо commit, щоб зберегти всі зміни в БД
         except sqlite3.Error as e:  # якщо виникли помилки повязані з БД, то
             print("Помилка додавання користувача в БД "+str(e))
