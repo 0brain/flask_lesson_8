@@ -1,7 +1,7 @@
 import sqlite3
 import os
 from flask import Flask, render_template, request, g, flash, abort
-from werkzeug.security import generate_password_hash, check_password_hash  # імпортуємо функції для кодування бази даних
+from werkzeug.security import generate_password_hash, check_password_hash  # імпортуємо функції для кодування бази даних і співставлення хеша з паролем
 from FDataBase import FDataBase
 
 # конфигурация
@@ -84,8 +84,21 @@ def login():
     return render_template("login.html", menu=dbase.getMenu(), title="Авторизація")
 
 
-@app.route("/register")
+@app.route("/register", methods=["POST", "GET"])
 def register():
+    if request.method == "POST":
+        if len(request.form['name']) > 4 and len(request.form['email']) > 4 \
+            and len(request.form['psw']) > 4 and request.form['psw'] == request.form['psw2']:
+            hash = generate_password_hash(request.form['psw'])
+            res = dbase.addUser(request.form['name'], request.form['email'], hash)
+            if res:
+                flash("Ви успішно зареєстровані", "success")
+                return redirect(url_for('login'))
+            else:
+                flash("При додаванні в базу даних виникла помилка", "error")
+        else:
+            flash("Невірно заповнені поля", "error")
+
     return render_template("register.html", menu=dbase.getMenu(), title="Реєстрація")
 
 
