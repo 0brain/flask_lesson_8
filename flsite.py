@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from flask import Flask, render_template, request, g, flash, abort
+from flask import Flask, render_template, request, g, flash, abort, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash  # імпортуємо функції для кодування бази даних і співставлення хеша з паролем
 from FDataBase import FDataBase
 
