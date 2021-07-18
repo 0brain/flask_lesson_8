@@ -76,7 +76,7 @@ class FDataBase:
             res = self.__cur.fetchone()
             if res['count'] > 0:
                 print("Користувач з таким email вже існує")
-                return False  # то ми повертаємо False і кажемо, що Користувач з таким email вже існує
+                return False  # то ми повертаємо False і кажемо, що Користувач з таким email вже існує (ми не добавляємо користувача з однаковим емейлом, емейл має бути унікальним)
 
             tm = math.floor(time.time())  # формуємо час коли відбувається реєстрація користувача
             self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, ?)", (name, email, hpsw, tm))
