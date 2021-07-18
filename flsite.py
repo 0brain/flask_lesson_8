@@ -15,6 +15,9 @@ app.config.from_object(__name__)  # загрузив конфігурацію з
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))  # вказуємо шлях до бази даних, вона буде знаходитися в робочому каталозі нашої програми
 
 
+login_manager = LoginManager(app)  # створюємо екземпляр класу LoginManager і звязуємо його з нашою програмою (app)
+
+
 def connect_db():  # Функція для встановлення зєднання з базою даних
     conn = sqlite3.connect(app.config['DATABASE'])
     conn.row_factory = sqlite3.Row
