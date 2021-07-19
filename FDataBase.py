@@ -86,3 +86,18 @@ class FDataBase:
             return False  # то ми повертаємо False і кажемо, що помилка додавання користувача в БД
 
         return True  # якщо помилок не виникло, то повертаємо True
+
+
+    def getUser(self, user_id):  #передаємо параметр user_id
+        try:
+            self.__cur.execute(f"SELECT * FROM users WHERE id = {user_id} LIMIT 1")  # вибираємо з БД всі поля з таблиці users з таким id - {user_id}.
+            res = self.__cur.fetchone()  # якщо зчитування даних пройшло успішно, то ми повертаємо колекцію res
+            if not res:
+                print("Користувач не знайдений")
+                return False  # якщо зчитування даних невдале, то ми повертаємо False і повідомлення про те, що користуава не знайдено
+
+            return res  # якщо зчитування даних пройшло успішно, то ми повертаємо колекцію res
+        except sqlite3.Error as e: # якщо виникли помилки повязані з БД, то
+            print("Помилка отримання даних з БД "+str(e))  # то ми повертаємо False і кажемо, що помилка отримання даних з БД
+
+        return False
