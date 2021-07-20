@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, g, flash, abort, redirect, ur
 from werkzeug.security import generate_password_hash, check_password_hash  # імпортуємо функції для кодування бази даних і співставлення хеша з паролем
 from FDataBase import FDataBase
 from flask_login import LoginManager
+from UserLogin import UserLogin
 
 # конфигурация
 DATABASE = '/tmp/flsite.db'  # шлях до бази даних
