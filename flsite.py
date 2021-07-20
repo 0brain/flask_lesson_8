@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, request, g, flash, abort, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash  # імпортуємо функції для кодування бази даних і співставлення хеша з паролем
 from FDataBase import FDataBase
-from flask_login import LoginManager, login_user
+from flask_login import LoginManager, login_user, login_required
 from UserLogin import UserLogin
 
 # конфигурация
@@ -81,6 +81,7 @@ def addPost():
 
 
 @app.route("/post/<alias>")  # вводимо декоратор для /post/<int:id_post> адреси, по якій буде відображатися стаття. # Змінюємо <int:id_post> на псевдонім alias, тобіто на унікальний url статті
+@login_required  #обмежуємо доступ до статей. Тепер тільки для авторизованих користувачів.
 def showPost(alias):   # функція showPost буде приймати параметр alias, який якраз відображається в URL /post/alias - унікальна адреса статті на сайті.
     title, post = dbase.getPost(alias)  # за допомогою методу getPost з бази даних ми будемо брати статтю по унікальному url - alias.
     if not title:   # якщо з якоїсь причини стаття не була отримана з бази даних, то
