@@ -19,6 +19,11 @@ app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))  # в
 login_manager = LoginManager(app)  # створюємо екземпляр класу LoginManager і звязуємо його з нашою програмою (app)
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    return UserLogin().fromDB(user_id, dbase)  # декоратор буде загружати, формувати екземпляр класу UserLogin при кожному запиті від клієнта
+
+
 def connect_db():  # Функція для встановлення зєднання з базою даних
     conn = sqlite3.connect(app.config['DATABASE'])
     conn.row_factory = sqlite3.Row
