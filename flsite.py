@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, request, g, flash, abort, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash  # імпортуємо функції для кодування бази даних і співставлення хеша з паролем
 from FDataBase import FDataBase
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user
 from UserLogin import UserLogin
 
 # конфигурация
@@ -89,9 +89,18 @@ def showPost(alias):   # функція showPost буде приймати па�
     return render_template('post.html', menu=dbase.getMenu(), title=title, post=post)  # а якщо все пройде добре, то буде відображено шаблон post.html, тобто стаття з заголовком title=title і вмістом post=post
 
 
-@app.route("/login")
+@app.route("/login", methods=["POST", "GET"])  # метод прийматиме дані по POST і GET запитах.
 def login():
-    return render_template("login.html", menu=dbase.getMenu(), title="Авторизація")
+    if request.method == "POST":  # якщо прийшов POST запит, то
+        user = dbase.getUserByEmail(request.form['email'])  # ми звертаємося до бази даних і беремо інформацію про користувача по емейлу (оскільки при реєстрації користувач вводить свій емейл і відповідно іемейл є унікальним)
+        if user and check_password_hash(user['psw'], request.form['psw']):  # якщо дані були отримані і пароль було введено вірно, то
+            userlogin = UserLogin().create(user)  # створюємо екземпляр класу UserLogin, передаємо йому user(всю ту інформацію, що прочитали з бази даних)
+            login_user(userlogin)  # та авторизуємо користувача за допомогою функції login_user
+            return redirect(url_for("index"))  # після чого робимо перенаправлення на головну сторінку сайту
+
+        flash("Пара логін/пароль є неверною", "error")  # якщо під час отримання даних щось пішло не так, то ми повідомляємо користувача через флеш повідомлення
+
+    return render_template("login.html", menu=dbase.getMenu(), title="Авторизація")  # і знову відображаємо сторінку авторизації
 
 
 @app.route("/register", methods=["POST", "GET"])
