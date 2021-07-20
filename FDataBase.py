@@ -101,3 +101,17 @@ class FDataBase:
             print("Помилка отримання даних з БД "+str(e))  # то ми повертаємо False і кажемо, що помилка отримання даних з БД
 
         return False
+
+    def getUserByEmail(self, email):  #в функцію передаємо параметр email
+        try:
+            self.__cur.execute(f"SELECT * FROM users WHERE email = '{email}' LIMIT 1")  # вибираємо з БД всі поля з таблиці users в яких вказано такий email - {email} (каке поле має бути одне).
+            res = self.__cur.fetchone() # якщо запит пройшов успішно, то ми повертаємо колекцію res
+            if not res:
+                print("Користувача не знайдено") # якщо зчитування даних невдале, то ми повертаємо False і повідомлення про те, що користуавача не знайдено
+                return False
+
+            return res
+        except sqlite3.Error as e:  #Якщо виникла помилка повязана з БД, то
+            print("Помилка отримання даних з БД "+str(e))  #ми повертаємо False і кажемо, що помилка отримання даних з БД
+
+        return False
