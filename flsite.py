@@ -122,5 +122,11 @@ def register():
     return render_template("register.html", menu=dbase.getMenu(), title="Реєстрація")
 
 
+@app.route('/profile')  # декоратор route, щоб сказати flask який url буде запускати функцію
+@login_required  # сторінка буде доступна тільки для авторизованих користувачів
+def profile():
+    return f"""<p><a href="{url_for('logout')}">Вийти з профілю</a>  
+    <p>user info:{current_user.get_id()}"""  # буде виводити пусту сторінку, на якій буде посилання "Вийти з профіля", а також фраза user info: з поточним id користувача
+
 if __name__ == "__main__":
     app.run(debug=True)
