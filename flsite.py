@@ -17,7 +17,7 @@ app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))  # в
 
 
 login_manager = LoginManager(app)  # створюємо екземпляр класу LoginManager і звязуємо його з нашою програмою (app)
-
+login_manager.login_view = 'login'  # після того як ми створили екземпляр класу LoginManager, ми можемо властивості login_view присвоїти функцію 'login', яка викликатиме форму авторизації. Тобто, якщо користувач не авторизований, і він хоче зайти в ту частину сайту, яка вимагає авторизації, то замість помилки 401(неавторизований) спрацює функція логін і викличе шаблон авторизації.
 
 @login_manager.user_loader
 def load_user(user_id):
