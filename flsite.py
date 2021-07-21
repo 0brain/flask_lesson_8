@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, request, g, flash, abort, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash  # імпортуємо функції для кодування бази даних і співставлення хеша з паролем
 from FDataBase import FDataBase
-from flask_login import LoginManager, login_user, login_required
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
 
 # конфигурация
