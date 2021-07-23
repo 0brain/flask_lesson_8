@@ -79,7 +79,7 @@ class FDataBase:
                 return False  # то ми повертаємо False і кажемо, що Користувач з таким email вже існує (ми не добавляємо користувача з однаковим емейлом, емейл має бути унікальним)
 
             tm = math.floor(time.time())  # формуємо час коли відбувається реєстрація користувача
-            self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, ?)", (name, email, hpsw, tm))
+            self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, NULL, ?)", (name, email, hpsw, tm))   # NULL означає, що ми пропускаємо 1 поле при додаванні даних в таблицю users. Перший NULL - це поле id, яке автогенерується. Другий NULL - це поле avatar і тут буде зберігатися аватар користувача.
             self.__db.commit()  # викликаємо commit, щоб зберегти всі зміни в БД
         except sqlite3.Error as e:  # якщо виникли помилки повязані з БД, то
             print("Помилка додавання користувача в БД "+str(e))
