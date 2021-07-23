@@ -10,6 +10,7 @@ from UserLogin import UserLogin
 DATABASE = '/tmp/flsite.db'  # шлях до бази даних
 DEBUG = True  # щоб було видно помилки
 SECRET_KEY = 'fdgfh78@#5?>gfhf89dx,v06k'  # ввів секретний ключ
+MAX_CONTENT_LENGTH = 1024 * 1024   # (1 Мб) константа дозволяє вказати максимальний об’єм файла (в байтах), який можна загрузити на сервер.
 
 app = Flask(__name__)
 app.config.from_object(__name__)  # загрузив конфігурацію з поточної програми, тобто на основі змінних DATABASE, DEBUG, SECRET_KEY буде сформована початкова конфігурація
