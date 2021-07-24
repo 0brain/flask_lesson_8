@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}   <!-- Відображаємо flash повідомлення, якщо вони тут будуть. -->
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+<table border="0" class="profile-table">
+    <tr><td valign="top">
+        <div class="profile-ava"><img src="{{ url_for('userava') }}"></div>  <!-- аватар -->
+        <div class="profile-load">
+            <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">  <!-- форма для вибору файла і відправки його на сервер -->
+                <p><input type="file" name="file">  <!-- кнопка, що дозволяє вибрати файл на компютері -->
+                <p><input type="submit" value="Завантажити">  <!-- кнопка, що відправляє файл на сервер  -->
+            </form>
+        </div>
+        </td>
+        <td valign="top" class="profile-panel">
+            <p><a href="{{url_for('logout')}}">Вийти з профілю</a> <!-- посилання щоб вийти з профілю -->
+            <ul class="profile-info">
+                <li>Ім’я: {{current_user.getName()}}</li>  <!-- буде відображено ім’я користувача. Через змінну current_user звертаємося до поточного профілю, і використовуємо методи класу UserLogin (.getName() i .getEmail()), щоб отримати ім’я та email користувача -->
+                <li>Email: {{current_user.getEmail()}}</li>  <!-- буде відображено email користувача. Через змінну current_user звертаємося до поточного профілю, і використовуємо методи класу UserLogin (.getName() i .getEmail()), щоб отримати ім’я та email користувача -->
+            </ul>
+        </td>
+    </tr>
+</table>
+{% endblock %}
