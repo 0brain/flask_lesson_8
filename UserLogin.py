@@ -30,3 +30,6 @@ class UserLogin(): # UserLogin створений таким чином, що у
     def getName(self):  # повертає імя користувача
         return self.__user['name'] if self.__user else "Без імені"  # якщо поле 'name' визначене, то повертаємо його, якщо ні, то повертаємо 'Без імені'.
 
+
+    def getEmail(self):  # повертає email користувача
+        return self.__user['email'] if self.__user else "Без email"  # якщо поле 'email' визначене, то повертаємо його, якщо ні, то повертаємо 'Без email'.
