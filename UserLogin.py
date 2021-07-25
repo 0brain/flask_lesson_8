@@ -33,3 +33,17 @@ class UserLogin(): # UserLogin створений таким чином, що у
 
     def getEmail(self):  # повертає email користувача
         return self.__user['email'] if self.__user else "Без email"  # якщо поле 'email' визначене, то повертаємо його, якщо ні, то повертаємо 'Без email'.
+
+
+    def getAvatar(self, app):
+        img = None
+        if not self.__user['avatar']:  # якщо для нашого користувача в базі даних аватарка відсутня
+            try:  # то ми намагаємося загрузити аватарку за замовчуванням
+                with app.open_resource(app.root_path + url_for('static', filename='images/default.png'), "rb") as f:  # за замовчуванням беремо шлях static/images/default.png, читаємо файл в бінарному режимі rb
+                    img = f.read()
+            except FileNotFoundError as e:
+                print("Не знайдено аватар за замовчуванням: "+str(e))
+        else:  # якщо у нашого користувача вже є аватарка і вона записана в таблиці бази даних, то
+            img = self.__user['avatar']  # змінна img зсилається на ту аватарку, що знаходиться в таблиці бази даних
+
+        return img # якщо все пройшло добре, то функція getAvatar повертає картинку з прочитаного файлу
