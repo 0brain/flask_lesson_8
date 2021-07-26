@@ -1,3 +1,6 @@
+from flask import url_for
+
+
 class UserLogin(): # UserLogin створений таким чином, що у змінній __user зберігається вся інформація про користувача.
     # через метод fromDB і create буде сформована властивість __user, через яку ми зможемо отримувати ['id'], щоб модуль flask_login міг ідентифікувати поточного користувача
     def fromDB(self, user_id, db):
