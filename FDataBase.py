@@ -115,3 +115,17 @@ class FDataBase:
             print("Помилка отримання даних з БД "+str(e))  #ми повертаємо False і кажемо, що помилка отримання даних з БД
 
         return False
+
+
+    def updateUserAvatar(self, avatar, user_id):  #даний метод змінює аватар в БД
+        if not avatar:  # якщо параметр avatar немає даних, то повертаємо False і робота функції завершується
+            return False
+
+        try:  # a інакше ми поміщаємо аватар в базу даних
+            binary = sqlite3.Binary(avatar)  # перетворюємо дані в бінарний об’єкт і бінарний обєкт поміщаємо в базу даних таким чином:
+            self.__cur.execute(f"UPDATE users SET avatar = ? WHERE id = ?", (binary, user_id))  # виконуємо sql запит UPDATE поле аватар міняємо на поле бінарі
+            self.__db.commit()  # якщо успішно, то зберігаємо значення в базі даних і повертаємо тру
+        except sqlite3.Error as e: # якщо помилка, то виводимо повідомлення та повертаємо фолс
+            print("Помилка оновлення аватара в БД: "+str(e))
+            return False
+        return True
