@@ -7,11 +7,16 @@
 {% endfor %}
 
 <form action="" method="post" class="form-contact">
-    <!-- Буде 2 поля вводу  "email" і "psw" -->
-    <p><label>Email: </label> <input type="text" name="email" value="" required />
+{{ form.hidden_tag() }}
+<p>{{ form.email.label() }} {{ form.email() }}
+<p>{{ form.psw.label() }} {{ form.psw() }}
+<p>{{ form.remember.label() }} {{ form.remember() }}
+<p>{{ form.submit() }}
+   <!-- Буде 2 поля вводу  "email" і "psw" -->
+    <!-- <p><label>Email: </label> <input type="text" name="email" value="" required />
     <p><label>Пароль: </label> <input type="password" name="psw" value="" required />
     <p><input type="checkbox" name="remainme" /> Запам’ятати мене
-    <p><input type="submit" value="Увійти" />
+    <p><input type="submit" value="Увійти" /> -->
     <hr align=left width="300px">
     <p><a href="{{url_for('register')}}">Реєстрація</a>
 </form>
