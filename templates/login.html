@@ -7,8 +7,8 @@
 {% endfor %}
 
 <form action="" method="post" class="form-contact">
-{{ form.hidden_tag() }}
-<p>{{ form.email.label() }} {{ form.email() }}
+{{ form.hidden_tag() }} <!-- метод hidden_tag для захисту від атак на сервер -->
+<p>{{ form.email.label() }} {{ form.email() }} <!-- метод .label формує опис поля, метод .email - формує саме поле вводу  -->
 <p>{{ form.psw.label() }} {{ form.psw() }}
 <p>{{ form.remember.label() }} {{ form.remember() }}
 <p>{{ form.submit() }}
