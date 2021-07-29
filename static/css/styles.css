@@ -63,6 +63,13 @@ div.content {
 .form-contact input[type=submit], textarea {
     front-size: 16px;
 }
+.form-contact .invalid {
+	display: inline-block;
+	background: #FF9898;
+}
+.form-contact .invalid-feedback {
+	color: #CC0000;
+}
 
 .flash {padding: 10px;}
 .flash.success {
