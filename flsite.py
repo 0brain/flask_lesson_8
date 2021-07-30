@@ -135,20 +135,32 @@ def login():
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
-    if request.method == "POST":
-        if len(request.form['name']) > 4 and len(request.form['email']) > 4 \
-            and len(request.form['psw']) > 4 and request.form['psw'] == request.form['psw2']:
-            hash = generate_password_hash(request.form['psw'])
-            res = dbase.addUser(request.form['name'], request.form['email'], hash)
-            if res:
-                flash("Ви успішно зареєстровані", "success")
-                return redirect(url_for('login'))
-            else:
-                flash("При додаванні в базу даних виникла помилка", "error")
+    form = RegisterForm()  # Створюємо екземпляр класу LoginForm
+    if form.validate_on_submit(): # перевіряємо чи були відправлені дані POST запитом(це еквівалентно if request.method == "POST"), крім того цей метод перевіряє коректність введених даних. Тобто, якщо дані були введені коректно і відправлені POST запитом, то переходимо далі
+        hash = generate_password_hash(request.form['psw'])  # генеруємо хеш паролю
+        res = dbase.addUser(form.name.data, form.email.data, hash)  # добавляємо користувача
+        if res:  # якщо користувач доданий успішно, то
+            flash("Ви успішно зареєстровані", "success")  # флеш повідомлення про те, що зареєстрований
+            return redirect(url_for('login')) # і редірект на форму логін
         else:
-            flash("Невірно заповнені поля", "error")
+            flash("Помилка при додаванні в базу даних", "error")
 
-    return render_template("register.html", menu=dbase.getMenu(), title="Реєстрація")
+    return render_template("register.html", menu=dbase.getMenu(), title="Реєстрація", form=form)  #параметр form і посилання (form=form) на створений клас RegisterForm
+
+    #if request.method == "POST":
+        #if len(request.form['name']) > 4 and len(request.form['email']) > 4 \
+            #and len(request.form['psw']) > 4 and request.form['psw'] == request.form['psw2']:
+            #hash = generate_password_hash(request.form['psw'])
+            #res = dbase.addUser(request.form['name'], request.form['email'], hash)
+            #if res:
+                #flash("Ви успішно зареєстровані", "success")
+                #return redirect(url_for('login'))
+            #else:
+                #flash("При додаванні в базу даних виникла помилка", "error")
+        #else:
+            #flash("Невірно заповнені поля", "error")
+#
+    #return render_template("register.html", menu=dbase.getMenu(), title="Реєстрація")
 
 
 @app.route('/logout')  # декоратор route, щоб сказати flask який url буде запускати функцію
