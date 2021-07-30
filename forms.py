@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm  # FlaskForm - базовий клас, який ми будемо розширювати за допомогою дочірнього класу LoginForm
 from wtforms import StringField, SubmitField, BooleanField, PasswordField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 class LoginForm(FlaskForm):  # LoginForm - клас для форми авторизації
     email = StringField("Email: ", validators=[Email("Некоректний email")])  # StringField - клас для роботи з полем введення # змінна email буде зсилатися на екземпляр класу StringField, назва поля "Email: ", параметр validators, який буде зсилатися на список валідаторів необхідних для перевірки коректності введених даних в полі емейл
