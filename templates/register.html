@@ -6,10 +6,26 @@
 <div class="flash {{cat}}">{{msg}}</div>
 {% endfor %}
 <form action="/register" method="post" class="form-contact">
-<p><label>Ім’я: </label> <input type="text" name="name" value="" required />
+    {{ form.hidden_tag() }} <!-- для захисту від атак -->
+{% for field in form if field.name not in ['csrf_token', 'submit'] -%} <!-- перебираємо всі поля через цикл, причому ігноруємо поля з таким іменем 'csrf_token', 'submit' . csrf_token це якраз прихований тег для захисту від ддос атак.-->
+	<p>{{ field.label() }} <!-- відображаємо імя поля -->
+	{% if field.errors %} <!-- якщо є якісь помилки, то  -->
+		{{ field(class="invalid") }}  <!-- присвоюємо клас "invalid", відповідно поле буде червоним -->
+	<span class="invalid-feedback">  <!-- і помилки будуть виводитися також червоним кольором, бо присвоїли той самий клас -->
+		{% for e in field.errors %}
+		{{ e }}
+		{% endfor %}
+	</span>
+	{% else %} <!-- якщо помилок немає, то буде звичайне поле  -->
+		{{ field() }}
+	{% endif %}
+{% endfor %}
+
+<p>{{ form.submit() }}
+<!--<p><label>Ім’я: </label> <input type="text" name="name" value="" required />
 <p><label>Email: </label> <input type="text" name="email" value="" required />
 <p><label>Пароль: </label> <input type="password" name="psw" value="" required />
 <p><label>Повторення паролю: </label> <input type="password" name="psw2" value="" required />
-<p><input type="submit" value="Реєстрація" />
+<p><input type="submit" value="Реєстрація" /> -->
 </form>
 {% endblock %}
