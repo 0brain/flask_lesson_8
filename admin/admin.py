@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request, redirect, url_for, render_template, flash
 
 # ввів admin - екземпляр класу Blueprint, та перечислив його параметри: 'admin', __name__, template_folder, static_folder
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
@@ -18,7 +18,7 @@ def login():
     if request.method == "POST": # Спочатку перевіряємо, що прийшли дані по POST-запиту
         if request.form['user'] == "admin" and request.form['psw'] == "123456": # потім, перевіряємо правильність логіна і пароля
             login_admin() # і при істинності умов, виконуємо авторизацію за допомогою функції login_admin, яку пропишемо трохи пізніше
-            return redirect(url_for('.index'))  # далі, робиться перенаправлення на головну сторінку адмін-панелі
+            return redirect(url_for('.index'))  # далі, робиться перенаправлення на головну сторінку адмін-панелі. Параметр у функції url_for ( '. index'). Перед index вказана точка. Ця точка означає, що функцію index слід брати для поточного Blueprint, а не глобальну з програми.
         else: # а інакше - формується миттєве повідомлення Невірна пара логін/пароль
             flash("Невірна пара логін/пароль", "error")
 
