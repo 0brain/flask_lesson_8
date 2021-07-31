@@ -18,6 +18,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)  # загрузив конфігурацію з поточної програми, тобто на основі змінних DATABASE, DEBUG, SECRET_KEY буде сформована початкова конфігурація
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))  # вказуємо шлях до бази даних, вона буде знаходитися в робочому каталозі нашої програми
 
+app.register_blueprint(admin, url_prefix='/admin')  # зареєстрував blueprint; admin - посилання на створений Blueprint; url_prefix - префікс для всіх URL модуля admin. Всі url всередині ескізу будуть мати наступний вид: домен/<url_prefix>/<URL-blueprint>
 
 login_manager = LoginManager(app)  # створюємо екземпляр класу LoginManager і звязуємо його з нашою програмою (app)
 login_manager.login_view = 'login'  #  після того як ми створили екземпляр класу LoginManager, ми можемо атрибуту login_view присвоїти функцію 'login', яка викликатиме форму авторизації. Тобто, якщо користувач не авторизований, і він хоче зайти в ту частину сайту, яка вимагає авторизації, то замість помилки 401(неавторизований) спрацює функція логін і викличе шаблон авторизації.
