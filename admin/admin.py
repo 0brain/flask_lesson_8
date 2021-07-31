@@ -7,3 +7,7 @@ admin = Blueprint('admin', __name__, template_folder='templates', static_folder=
 #template_folder - підкаталог для шаблонів
 #static_folder - підкаталог для статичних файлів
 
+
+@admin.route('/')  # Для змінної admin ввів декоратор route.
+def index():
+    return "admin"
