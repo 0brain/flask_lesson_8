@@ -16,6 +16,8 @@ def isLogged():  # Функція перевіряє авторизований 
     return True if session.get('admin_logged') else False  # Повертає True, якщо запис 'admin_logged' існує в сесії і False, якщо не існує.
 
 
+def logout_admin():  # Функція за допомогою якої ми будемо виходити з панелі адміністратора.
+    session.pop('admin_logged', None)  # Видаляє з сесії запис про авторизацію користувача як адміністратора.
 
 @admin.route('/')  # викликаємо route для admin, а не app, як це робили в основному додатку. Тим самим вказуємо, що коренева (головна) сторінка - це сторінка Blueprint, а не програми app.
 def index():
