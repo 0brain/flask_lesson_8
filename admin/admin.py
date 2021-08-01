@@ -34,3 +34,13 @@ def login():
             flash("Невірна пара логін/пароль", "error")
 
     return render_template('admin/login.html', title='Панель адміністратора')  #в кінці повертає шаблон 'admin/login.html' з заголовком 'Панель адміністратора'
+
+
+@admin.route('/logout', methods=["POST", "GET"])
+def logout():
+    if not isLogged(): # Якщо користувач не ввійшов в панель адміністратора, то переводимо його на сторінку login.
+        return redirect(url_for('.login'))
+
+    logout_admin() # А інакше, якщо користувач авторизований, то видаляємо запис з сесії і
+
+    return redirect(url_for('.login'))  # переводимо його на сторінку login.
