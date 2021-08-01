@@ -8,6 +8,10 @@ admin = Blueprint('admin', __name__, template_folder='templates', static_folder=
 #static_folder - підкаталог для статичних файлів
 
 
+def login_admin():
+    session['admin_logged'] = 1  # в сесії створюємо і зберігаємо запис 'admin_logged' зі значенням 1. І в подальшому будемо вважати, якщо сесія існує, то користувач зайшов в панель адміністратора.
+
+
 @admin.route('/')  # викликаємо route для admin, а не app, як це робили в основному додатку. Тим самим вказуємо, що коренева (головна) сторінка - це сторінка Blueprint, а не програми app.
 def index():
     return "admin"
