@@ -1,4 +1,4 @@
-from flask import Blueprint, request, redirect, url_for, render_template, flash
+from flask import Blueprint, request, redirect, url_for, render_template, flash, session
 
 # ввів admin - екземпляр класу Blueprint, та перечислив його параметри: 'admin', __name__, template_folder, static_folder
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
@@ -9,7 +9,7 @@ admin = Blueprint('admin', __name__, template_folder='templates', static_folder=
 
 
 def login_admin():
-    session['admin_logged'] = 1  # в сесії створюємо і зберігаємо запис 'admin_logged' зі значенням 1. І в подальшому будемо вважати, якщо сесія існує, то користувач зайшов в панель адміністратора.
+    session['admin_logged'] = 1  # в сесії створюємо і зберігаємо запис 'admin_logged' зі значенням 1. І в подальшому будемо вважати, якщо запис в сесії існує, то користувач зайшов в панель адміністратора.
 
 
 @admin.route('/')  # викликаємо route для admin, а не app, як це робили в основному додатку. Тим самим вказуємо, що коренева (головна) сторінка - це сторінка Blueprint, а не програми app.
