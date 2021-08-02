@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Для звернення до каталогу static перший параметр функції url_for ('. static', filename = 'css / styles.css') записаний з точкою. Ця точка буде вказувати щоб брати каталог static з admin, тобто admin / static / css / styles.css -->
+<link type="text/css" href="{{ url_for('.static', filename='css/styles.css')}}" rel="stylesheet" />
+<title>{{ title }}</title>
+</head>
+<body>
+{% if menu -%} <!-- Відображення меню, якщо воно передається в шаблон -->
+         <ul class="mainmenu">
+         {% for p in menu %}
+         <li><a href="{{ url_for(p.url) }}">{{p.title}}</a></li>
+         {% endfor %}
+         </ul>
+         <div class="clear"></div>
+{%- endif -%}
+<div class="content"> <!-- і записаний іменований блок content для додавання інформації в дочірніх шаблонах -->
+{% block content -%}
+{% endblock %}
+</div>
+</body>
+</html>
