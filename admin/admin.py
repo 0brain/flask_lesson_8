@@ -1,4 +1,4 @@
-from flask import Blueprint, request, redirect, url_for, render_template, flash, session
+from flask import Blueprint, request, redirect, url_for, render_template, flash, session, g
 
 # ввів admin - екземпляр класу Blueprint, та перечислив його параметри: 'admin', __name__, template_folder, static_folder
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
@@ -26,7 +26,7 @@ menu = [{'url': '.index', 'title': 'Панель'},
 
 db = None # якщо з’єднання з БД не було встановлено то змінна db приймає значення None
 @admin.before_request
-def before_request(): # встановлення зєднання з БД перед виконанням запиту
+def before_request():  # встановлення зєднання з БД перед виконанням запиту
     global db  # у функції before_request звертаємося до глобальної змінної g контексту програми і беремо звідти значення 'link_db', яке пов'язане з посиланням на з'єднання з БД.
     db = g.get('link_db')
 
