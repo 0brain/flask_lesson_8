@@ -24,11 +24,18 @@ menu = [{'url': '.index', 'title': 'Панель'},
         {'url': '.logout', 'title': 'Вийти'}]
 
 
-db = None
+db = None # якщо з’єднання з БД не було встановлено то змінна db приймає значення None
 @admin.before_request
 def before_request(): # встановлення зєднання з БД перед виконанням запиту
     global db  # у функції before_request звертаємося до глобальної змінної g контексту програми і беремо звідти значення 'link_db', яке пов'язане з посиланням на з'єднання з БД.
     db = g.get('link_db')
+
+
+@admin.teardown_request  # закриває зєднання з БД
+def teardown_request(request): # тут коли ми завершуємо виконання запиту, db знову приймає значення None
+    global db
+    db = None
+    return request
 
 
 @admin.route('/')  # викликаємо route для admin, а не app, як це робили в основному додатку. Тим самим вказуємо, що коренева (головна) сторінка - це сторінка Blueprint, а не програми app.
