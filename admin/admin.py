@@ -88,3 +88,20 @@ def listpubs():
             print("Помилка отримання статей з БД " + str(e))
 
     return render_template('admin/listpubs.html', title='Список статей', menu=menu, list=list) # повертається сторінка з шаблону 'admin / listpubs.html'
+
+
+@admin.route('/list-users') # вводимо декоратор '/list-users' для списку користувачів
+def listusers():
+    if not isLogged(): # якщо користувач не увійшов в адмін-панель, то він перенаправляється на сторінку авторизації.
+        return redirect(url_for('.login'))
+
+    list = []
+    if db:
+        try: # перевіряємо: якщо з'єднання з БД встановлено, то з таблиці users вибираються всі записи з полями: name, email відсортовані п опорядку реєстрації.
+            cur = db.cursor()
+            cur.execute(f"SELECT name, email FROM users ORDER BY time DESC")
+            list = cur.fetchall() # з бази даних читаємо список користувачів і зберігаємо в змінній list.
+        except sqlite3.Error as e:
+            print("Помилка отримання статей з БД " + str(e))
+
+    return render_template('admin/listusers.html', title='Список користувачів', menu=menu, list=list)  # повертається сторінка з шаблону 'admin/listusers.html'
