@@ -1,0 +1,14 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+<h1>{{title}}</h1>
+<ul class="list-posts">
+{% for p in list %} <!-- Перебираємо список всіх статей з нашого списку list, який ми отримали з БД-->
+<li> <!-- Виводимо елементи списку в такому виді: -->
+<p class="title"><a href="{{ url_for('showPost', alias=p.url)}}">{{p.title}}</a></p> <!-- Спочатку заголовок, причому в вигляді посилання -->
+<p class="annonce">{{ p.text[:50] | striptags  }}</p> <!-- Далі анонс до 50 символів-->
+</li>
+{% endfor %}
+</ul>
+{% endblock %}
