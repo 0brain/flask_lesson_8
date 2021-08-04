@@ -1,0 +1,14 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+<h1>{{title}}</h1>
+<ul class="list-posts">
+{% for p in list %} <!-- Перебираємо список всіх користувачів з нашого списку list, який ми отримали з БД-->
+<li> <!-- Виводимо елементи списку в такому виді: -->
+<p class="title">{{p.name}}</p> <!-- Ім’я -->
+<p class="annonce">{{ p.email }}</p> <!-- Електронна адреса-->
+</li>
+{% endfor %}
+</ul>
+{% endblock %}
