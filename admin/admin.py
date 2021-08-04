@@ -22,6 +22,7 @@ def logout_admin():  # Функція за допомогою якої ми бу
 
 
 menu = [{'url': '.index', 'title': 'Панель'},
+        {'url': '.listpubs', 'title': 'Список статей'},
         {'url': '.logout', 'title': 'Вийти'}]
 
 
