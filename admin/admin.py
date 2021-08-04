@@ -69,3 +69,20 @@ def logout():
     logout_admin() # А інакше, якщо користувач авторизований, то видаляємо запис з сесії і
 
     return redirect(url_for('.login'))  # переводимо його на сторінку login.
+
+
+@admin.route('/list-pubs')  # вводимо декоратор '/list-pubs' для списку статей
+def listpubs():
+    if not isLogged(): # якщо користувач не увійшов в адмін-панель, то він перенаправляється на сторінку авторизації.
+        return redirect(url_for('.login'))
+
+    list = []
+    if db:
+        try: # перевіряємо: якщо з'єднання з БД встановлено, то з таблиці posts вибираються всі записи з полями: title, text, url.
+            cur = db.cursor()
+            cur.execute(f"SELECT title, text, url FROM posts")
+            list = cur.fetchall()  # з бази даних читаємо список статей і зберігаємо в змінній list.
+        except sqlite3.Error as e:
+            print("Помилка отримання статей з БД " + str(e))
+
+    return render_template('admin/listpubs.html', title='Список статей', menu=menu, list=list) # повертається сторінка з шаблону 'admin / listpubs.html'
