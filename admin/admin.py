@@ -1,3 +1,4 @@
+import sqlite3
 from flask import Blueprint, request, redirect, url_for, render_template, flash, session, g
 
 # ввів admin - екземпляр класу Blueprint, та перечислив його параметри: 'admin', __name__, template_folder, static_folder
